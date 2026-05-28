@@ -62,6 +62,7 @@ export const projects = [
   {
     title: 'Tatparya Backend v2',
     subtitle: 'Digital Identity Intelligence Tool',
+    best: true,
     description:
       'Backend system built for Raipur Police to support digital identity investigation by correlating public internet signals from comments and social activity across platforms.',
     tags: ['OSINT', 'Backend APIs', 'Search', 'Investigation Tools'],

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, Github, Award } from 'lucide-react';
+import { ArrowUpRight, Github, Award, Trophy } from 'lucide-react';
 import AchievementsSection from './components/AchievementsSection.jsx';
 import ContactSection from './components/ContactSection.jsx';
 import HeroBoard from './components/HeroBoard.jsx';
@@ -70,7 +70,36 @@ function useReveal() {
   }, []);
 }
 
-function Nav({ scrolled, pastHero }) {
+function useActiveSection(sectionIds) {
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-30% 0px -60% 0px',
+        threshold: 0,
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [sectionIds]);
+
+  return activeSection;
+}
+
+function Nav({ scrolled, pastHero, activeSection }) {
   return (
     <nav
       className={['site-nav', scrolled ? 'scrolled' : '', pastHero ? 'site-nav--visible' : ''].filter(Boolean).join(' ')}
@@ -81,7 +110,11 @@ function Nav({ scrolled, pastHero }) {
       </a>
       <div className="nav-links">
         {sections.map((section) => (
-          <a key={section} href={`#${section}`}>
+          <a
+            key={section}
+            href={`#${section}`}
+            className={activeSection === section ? 'active' : ''}
+          >
             {section}
           </a>
         ))}
@@ -106,7 +139,7 @@ function ProjectCard({ project, index }) {
         <div className="project-header-left">
           <h3 className="project-title">
             {project.title}
-            {project.best && <Award size={16} className="project-best" />}
+            {project.best && <Trophy size={18} className="project-best-trophy" />}
             <span>{project.subtitle}</span>
           </h3>
         </div>
@@ -141,10 +174,10 @@ function ProjectCard({ project, index }) {
         {hasImage && (
           <div className="project-body-right">
             <div className="project-photo-wrap">
-              <img 
-                src={project.photo || project.preview} 
-                alt={`${project.title} preview`} 
-                className="project-photo" 
+              <img
+                src={project.photo || project.preview}
+                alt={`${project.title} preview`}
+                className="project-photo"
                 style={{ transform: `rotate(${Math.random() * 4 - 2}deg)` }}
               />
             </div>
@@ -303,12 +336,13 @@ function Footer() {
 
 export default function App() {
   const { progress, scrolled, pastHero } = useScrollProgress();
+  const activeSection = useActiveSection(sections);
   useReveal();
 
   return (
     <>
       <div className="scroll-line" style={{ width: `${progress}%` }} />
-      <Nav scrolled={scrolled} pastHero={pastHero} />
+      <Nav scrolled={scrolled} pastHero={pastHero} activeSection={activeSection} />
       <main>
         <HeroBoard />
         <About />
