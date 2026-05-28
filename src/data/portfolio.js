@@ -60,7 +60,7 @@ export const projects = [
     preview: '/assests/dashboard_payflow.png',
   },
   {
-    title: 'Tatparya Backend v2',
+    title: 'Tatparya',
     subtitle: 'Digital Identity Intelligence Tool',
     best: true,
     description:
