@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, Github } from 'lucide-react';
+import { ArrowUpRight, Github, Award } from 'lucide-react';
 import AchievementsSection from './components/AchievementsSection.jsx';
 import ContactSection from './components/ContactSection.jsx';
 import HeroBoard from './components/HeroBoard.jsx';
@@ -99,70 +99,62 @@ function Status({ value }) {
 }
 
 function ProjectCard({ project, index }) {
+  const hasImage = !!(project.photo || project.preview);
   return (
     <article className={project.featured ? 'board-card project-card featured' : 'board-card project-card'} data-reveal>
-      <div className="project-content">
-        <div className="project-meta">
-          <span className="project-num">{String(index + 1).padStart(3, '0')}</span>
-          <Status value={project.status} />
+      <div className="project-header">
+        <div className="project-header-left">
+          <h3 className="project-title">
+            {project.title}
+            {project.best && <Award size={16} className="project-best" />}
+            <span>{project.subtitle}</span>
+          </h3>
         </div>
-        <h3 className="project-title">
-          {project.title}
-          <span>{project.subtitle}</span>
-        </h3>
-        <p className="project-desc">{project.description}</p>
-        <div className="project-tags">
-          {project.tags.map((tag) => (
-            <span className="tag" key={tag}>
-              {tag}
-            </span>
-          ))}
-        </div>
-        {project.metrics?.length > 0 && (
-          <ul className="project-metrics">
-            {project.metrics.map((metric) => (
-              <li key={metric}>{metric}</li>
-            ))}
-          </ul>
+        {project.status && (
+          <div className="project-header-right">
+            <Status value={project.status} />
+          </div>
         )}
-        <div className="project-links">
-          {project.links.map((link) => (
-            <a className="text-link" href={link.href} key={link.label} {...linkProps(link.href)}>
-              {link.label === 'GitHub' && <Github size={13} />}
-              {link.label}
-              <ArrowUpRight size={13} />
-            </a>
-          ))}
-        </div>
       </div>
-      {project.featured && (
-        <div className="project-visual" aria-label={`${project.title} preview`}>
-          <div className="visual-topbar">
-            <span />
-            <span />
-            <span />
-          </div>
-          <div className="visual-body">
-            <div className="visual-metrics">
-              {project.metrics?.map((metric) => (
-                <span className="visual-metric" key={metric}>
-                  {metric}
-                </span>
-              ))}
-            </div>
-            <pre>
-              <code>{`const queue = connect("notifications")
 
-for await (const job of queue) {
-  await deliverWithRetry(job)
-}`}</code>
-            </pre>
+      <div className={`project-body ${hasImage ? 'with-image' : 'no-image'}`}>
+        <div className="project-body-left">
+          <p className="project-desc">{project.description}</p>
+          {project.metrics?.length > 0 && (
+            <ul className="project-metrics">
+              {project.metrics.map((metric) => (
+                <li key={metric}>{metric}</li>
+              ))}
+            </ul>
+          )}
+          <div className="project-links">
+            {project.links.map((link) => (
+              <a className="text-link" href={link.href} key={link.label} {...linkProps(link.href)}>
+                {link.label === 'GitHub' && <Github size={13} />}
+                {link.label}
+                <ArrowUpRight size={13} />
+              </a>
+            ))}
           </div>
         </div>
-      )}
+
+        {hasImage && (
+          <div className="project-body-right">
+            <div className="project-photo-wrap">
+              <img 
+                src={project.photo || project.preview} 
+                alt={`${project.title} preview`} 
+                className="project-photo" 
+                style={{ transform: `rotate(${Math.random() * 4 - 2}deg)` }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </article>
   );
 }
+
 
 function About() {
   return (
@@ -199,6 +191,9 @@ function About() {
             </a>
             <a href="https://github.com/devdoesgit" className="pill-link pill-link--ghost" {...linkProps('https://github.com/devdoesgit')}>
               GitHub <ArrowUpRight size={14} />
+            </a>
+            <a href="https://leetcode.com/u/andrewflik/" className="pill-link pill-link--ghost" {...linkProps('https://leetcode.com/u/andrewflik/')}>
+              LeetCode <ArrowUpRight size={14} />
             </a>
           </div>
         </div>
@@ -265,16 +260,7 @@ function Experience() {
 function Projects() {
   return (
     <SectionShell id="projects" variant="light">
-      <SectionHeader number="03" title="Projects" count={`${projects.length} selected`} note="ship logs ↓" />
-      <div className="section-lede" data-reveal>
-        <p>
-          Kernel tooling, NLP automation, production backend reliability, and high-traffic campaign APIs — selected work
-          that shows how I think and build.
-        </p>
-        <a href={profile.projectsUrl} className="pill-link" {...linkProps(profile.projectsUrl)}>
-          All projects <ArrowUpRight size={14} />
-        </a>
-      </div>
+      <SectionHeader number="03" title="Featured projects" />
       <div className="projects-grid">
         {projects.map((project, index) => (
           <ProjectCard project={project} index={index} key={project.title} />

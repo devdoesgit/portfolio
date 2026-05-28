@@ -3,6 +3,7 @@ import DraggablePiece from './DraggablePiece.jsx';
 import { StickyNote } from './ui.jsx';
 import { useHeroPositions } from '../hooks/useHeroPositions.js';
 import { profile } from '../data/portfolio.js';
+import BlurShimmerText from './BlurShimmerText.jsx';
 
 function Squiggle() {
   return (
@@ -54,7 +55,7 @@ function Polaroid() {
   return (
     <div className="hero-polaroid">
       <div className="hero-polaroid-photo">
-        <span>{profile.firstName.charAt(0)}</span>
+        <img src="/assests/astaa.gif" alt={`${profile.firstName} avatar`} />
       </div>
       <p>{profile.firstName} ✦</p>
     </div>
@@ -67,7 +68,7 @@ export default function HeroBoard() {
 
 const tagline = (
   <>
-    Full-stack developer building and shipping <strong>scalable web products</strong> with attention to performance, usability, and product detail.
+    Software Dev Engineer building and shipping <strong>scalable web products</strong> with attention to performance, usability, and product detail.
   </>
 );
 
@@ -196,8 +197,9 @@ const tagline = (
           </div>
 
           <h1 className="hero-board-title">
-            <span>FULL STACK</span>
-            <span>FREELANCER</span>
+            <span>
+              <BlurShimmerText phrases={["FULL STACK DEVELOPER","BACKEND DEVELOPER"]} interval={3000} />
+            </span>
           </h1>
 
           <p className="hero-board-tagline">{tagline}</p>

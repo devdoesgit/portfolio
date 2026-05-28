@@ -28,43 +28,46 @@ export const projects = [
   {
     title: 'Kernel-Level Memory Logger',
     subtitle: 'Game Input Bug Analysis',
-    status: 'Systems',
     featured: true,
     description:
       'Windows kernel driver that reads process memory to log user inputs and internal state changes, enabling precise reproduction of intermittent software bugs.',
     tags: ['C++', 'Windows Kernel', 'IOCTL', 'Systems'],
     links: [{ label: 'GitHub', href: 'https://github.com/devdoesgit/kml-v2' }],
     metrics: ['Hackathon winner: TCNJ 2021', 'Kernel driver', 'Safe IOCTL communication'],
+    preview: '/assests/kernel_logger_preview.png',
   },
   {
     title: 'BORING.io',
     subtitle: 'Legal Document Simplifier',
-    status: 'NLP',
+    featured: true,
+    best: true,
     description:
       'NLP-powered web app that analyzes privacy policies, terms of service, and EULAs, then turns complex legal text into simple user-friendly summaries.',
     tags: ['NLP', 'spaCy', 'BERT', 'Web App'],
     links: [{ label: 'GitHub', href: 'https://github.com/devdoesgit/BORING.io---Hack-2021' }],
     metrics: ['Multiple hackathon wins', '75% faster review time', 'Clause and risk extraction'],
+    preview: '/assests/boring_preview.png',
   },
+
   {
     title: 'PayFlow',
     subtitle: 'Payment Flow Backend',
-    status: 'Project',
     description:
       'Backend-focused payment flow project for modeling transaction paths, checkout reliability, and payment state handling.',
     tags: ['Payments', 'Backend APIs', 'Reliability', 'Node.js'],
     links: [{ label: 'GitHub', href: 'https://github.com/devdoesgit/payFlow' }],
     metrics: ['Payment flow design', 'Transaction state handling', 'Checkout reliability'],
+    preview: '/assests/dashboard_payflow.png',
   },
   {
     title: 'Tatparya Backend v2',
     subtitle: 'Digital Identity Intelligence Tool',
-    status: 'Project',
     description:
       'Backend system built for Raipur Police to support digital identity investigation by correlating public internet signals from comments and social activity across platforms.',
     tags: ['OSINT', 'Backend APIs', 'Search', 'Investigation Tools'],
     links: [{ label: 'GitHub', href: 'https://github.com/devdoesgit/tatparya-backend-v2' }],
     metrics: ['Public-signal correlation', 'Social account discovery', 'Law-enforcement use case'],
+    photo: '/assests/tatparya_winner.JPG',
   },
 ];
 
