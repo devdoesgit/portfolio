@@ -1,7 +1,7 @@
 export const profile = {
   firstName: 'Devesh',
   lastName: 'Rajput',
-  role: 'Full-Stack Freelancer',
+  role: 'Software Development Engineer',
   availability: 'Available for client projects',
   email: 'deveshrajput978@gmail.com',
   phone: '+91 93592 69477',
