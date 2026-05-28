@@ -310,7 +310,7 @@ button {
   padding: clamp(3.5rem, 8vw, 5rem) 0.5rem 0;
   pointer-events: none;
   font-family: var(--hero-title);
-  font-size: clamp(3.2rem, 11vw, 8.5rem);
+  font-size: clamp(2.8rem, 9.5vw, 6.8rem);
   font-weight: 400;
   line-height: 0.88;
   letter-spacing: -0.02em;
@@ -1961,9 +1961,9 @@ button {
   }
 
   .hero-board-title {
-    min-height: 200px;
-    padding-top: 1rem;
-    font-size: clamp(2.5rem, 14vw, 3.8rem);
+    min-height: 180px;
+    padding-top: 2rem;
+    font-size: clamp(2rem, 11vw, 3.2rem);
   }
 
   .hero-piece--scroll {
@@ -1976,8 +1976,35 @@ button {
     display: none;
   }
 
+  .hero-canvas {
+    position: relative !important;
+    inset: auto !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    width: 100% !important;
+    margin-top: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0 0.5rem !important;
+    pointer-events: auto !important;
+    height: auto !important;
+  }
+
+  .hero-canvas .hero-piece {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: rotate(var(--piece-rotate, 0deg)) !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
   .hero-piece .sticky-note {
-    width: min(128px, 42vw);
+    width: min(135px, 42vw) !important;
   }
 
   .hero-phone {
@@ -1986,12 +2013,6 @@ button {
 
   .hero-polaroid {
     width: 76px;
-  }
-
-  .hero-board-title {
-    min-height: 200px;
-    padding-top: 2.75rem;
-    font-size: clamp(2.5rem, 14vw, 3.8rem);
   }
 
   .hero-board-tagline {
@@ -2010,7 +2031,81 @@ button {
     display: none;
   }
 
-  .about-grid,
+  /* About Slider Styles */
+  .about-grid {
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+
+  .about-slider {
+    display: flex;
+    width: 200%;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .about-slider.active-about {
+    transform: translateX(0);
+  }
+
+  .about-slider.active-toolkit {
+    transform: translateX(-50%);
+  }
+
+  .about-text,
+  .skills-panel {
+    width: 50% !important;
+    flex-shrink: 0 !important;
+    height: auto !important;
+  }
+
+  .skills-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .skills-panel .panel-label {
+    margin: 0 !important;
+  }
+
+  .about-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--hand);
+    font-size: 1.15rem;
+    color: var(--hero-orange);
+    background: transparent;
+    border: none;
+    padding: 0.5rem 0;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .about-toggle-btn:hover {
+    color: var(--hero-orange-deep);
+  }
+
+  .about-toggle-btn .toggle-arrow {
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 0.2s;
+  }
+
+  .about-toggle-btn.to-toolkit:hover .toggle-arrow {
+    transform: translateX(3px);
+  }
+
+  .about-toggle-btn.to-about:hover .toggle-arrow {
+    transform: translateX(-3px);
+  }
+
   .achieve-stats {
     grid-template-columns: 1fr 1fr;
   }
@@ -2065,6 +2160,30 @@ button {
   .footer-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (min-width: 821px) {
+  .about-toggle-btn {
+    display: none !important;
+  }
+  
+  .about-slider {
+    display: contents;
+  }
+}
+
+@media (max-width: 520px) {
+  .achieve-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .achieve-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .achieve-spotlight:nth-child(6) {
+    grid-column: span 1;
   }
 }
 

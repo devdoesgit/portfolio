@@ -190,60 +190,119 @@ function ProjectCard({ project, index }) {
 
 
 function About() {
+  const [activeTab, setActiveTab] = useState('about');
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
+  const [touchEndY, setTouchEndY] = useState(0);
+
+  const onTouchStart = (e) => {
+    setTouchEndX(0);
+    setTouchEndY(0);
+    setTouchStartX(e.targetTouches[0].clientX);
+    setTouchStartY(e.targetTouches[0].clientY);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+    setTouchEndY(e.targetTouches[0].clientY);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+    
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+      if (diffX > 0) {
+        setActiveTab('toolkit');
+      } else {
+        setActiveTab('about');
+      }
+    }
+  };
+
   return (
     <SectionShell id="about" variant="light">
       <SectionHeader number="01" title="About" note="what I build →" />
-      <div className="about-grid">
-        <div className="board-card about-text" data-reveal>
-          <p>
-            I help clients turn rough product ideas into working software: responsive frontends, backend APIs, database
-            design, auth flows, admin dashboards, automation, and deployable MVPs.
-          </p>
-          <p>
-            My strongest edge is backend-heavy full-stack work — the interface clients use, wired to reliable services,
-            queues, storage, search, payments, and third-party APIs.
-          </p>
-          <p>
-            Before freelancing, I worked on production systems at MyGlamm and Good Glamm Group: payment reliability,
-            campaign APIs, distributed services, and container memory optimization.
-          </p>
-          <div className="service-strip" aria-label="Freelance services">
-            {services.map((service) => (
-              <span key={service}>{service}</span>
+      <div 
+        className="about-grid"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <div className={`about-slider active-${activeTab}`}>
+          <div className="board-card about-text" data-reveal>
+            <p>
+              I help clients turn rough product ideas into working software: responsive frontends, backend APIs, database
+              design, auth flows, admin dashboards, automation, and deployable MVPs.
+            </p>
+            <p>
+              My strongest edge is backend-heavy full-stack work — the interface clients use, wired to reliable services,
+              queues, storage, search, payments, and third-party APIs.
+            </p>
+            <p>
+              Before freelancing, I worked on production systems at MyGlamm and Good Glamm Group: payment reliability,
+              campaign APIs, distributed services, and container memory optimization.
+            </p>
+            <div className="service-strip" aria-label="Freelance services">
+              {services.map((service) => (
+                <span key={service}>{service}</span>
+              ))}
+            </div>
+            <div className="link-row">
+              <a href={profile.resumeUrl} className="pill-link" {...linkProps(profile.resumeUrl)}>
+                Resume <ArrowUpRight size={14} />
+              </a>
+              <a href={profile.projectsUrl} className="pill-link pill-link--ghost" {...linkProps(profile.projectsUrl)}>
+                Proof of work <ArrowUpRight size={14} />
+              </a>
+              <a href={profile.linkedinUrl} className="pill-link pill-link--ghost" {...linkProps(profile.linkedinUrl)}>
+                LinkedIn <ArrowUpRight size={14} />
+              </a>
+              <a href="https://github.com/devdoesgit" className="pill-link pill-link--ghost" {...linkProps('https://github.com/devdoesgit')}>
+                GitHub <ArrowUpRight size={14} />
+              </a>
+              <a href="https://leetcode.com/u/andrewflik/" className="pill-link pill-link--ghost" {...linkProps('https://leetcode.com/u/andrewflik/')}>
+                LeetCode <ArrowUpRight size={14} />
+              </a>
+            </div>
+            <button 
+              type="button" 
+              className="about-toggle-btn to-toolkit" 
+              onClick={() => setActiveTab('toolkit')}
+              aria-label="View Toolkit"
+            >
+              <span>View Toolkit</span>
+              <span className="toggle-arrow">➔</span>
+            </button>
+          </div>
+          <div className="board-card skills-panel" data-reveal>
+            <div className="skills-header">
+              <h3 className="panel-label">Toolkit</h3>
+              <button 
+                type="button" 
+                className="about-toggle-btn to-about" 
+                onClick={() => setActiveTab('about')}
+                aria-label="Back to About Me"
+              >
+                <span className="toggle-arrow">←</span>
+                <span>About Me</span>
+              </button>
+            </div>
+            {skillGroups.map((group) => (
+              <div className="skill-row" key={group.category}>
+                <span className="skill-cat">{group.category}</span>
+                <div className="skill-items">
+                  {group.skills.map((skill) => (
+                    <span className="skill-pill" key={skill}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
-          <div className="link-row">
-            <a href={profile.resumeUrl} className="pill-link" {...linkProps(profile.resumeUrl)}>
-              Resume <ArrowUpRight size={14} />
-            </a>
-            <a href={profile.projectsUrl} className="pill-link pill-link--ghost" {...linkProps(profile.projectsUrl)}>
-              Proof of work <ArrowUpRight size={14} />
-            </a>
-            <a href={profile.linkedinUrl} className="pill-link pill-link--ghost" {...linkProps(profile.linkedinUrl)}>
-              LinkedIn <ArrowUpRight size={14} />
-            </a>
-            <a href="https://github.com/devdoesgit" className="pill-link pill-link--ghost" {...linkProps('https://github.com/devdoesgit')}>
-              GitHub <ArrowUpRight size={14} />
-            </a>
-            <a href="https://leetcode.com/u/andrewflik/" className="pill-link pill-link--ghost" {...linkProps('https://leetcode.com/u/andrewflik/')}>
-              LeetCode <ArrowUpRight size={14} />
-            </a>
-          </div>
-        </div>
-        <div className="board-card skills-panel" data-reveal>
-          <h3 className="panel-label">Toolkit</h3>
-          {skillGroups.map((group) => (
-            <div className="skill-row" key={group.category}>
-              <span className="skill-cat">{group.category}</span>
-              <div className="skill-items">
-                {group.skills.map((skill) => (
-                  <span className="skill-pill" key={skill}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </SectionShell>

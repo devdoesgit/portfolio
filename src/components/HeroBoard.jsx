@@ -66,11 +66,11 @@ export default function HeroBoard() {
   const boardRef = useRef(null);
   const { positions, movePiece, dragEnabled } = useHeroPositions();
 
-const tagline = (
-  <>
-    Software Dev Engineer building and shipping <strong>scalable web products</strong> with attention to performance, usability, and product detail.
-  </>
-);
+  const tagline = (
+    <>
+      Software Dev Engineer building and shipping <strong>scalable web products</strong> with attention to performance, usability, and product detail.
+    </>
+  );
 
   return (
     <header className="hero" id="top">
@@ -198,7 +198,7 @@ const tagline = (
 
           <h1 className="hero-board-title">
             <span>
-              <BlurShimmerText phrases={["FULL STACK DEVELOPER","BACKEND DEVELOPER"]} interval={3000} />
+              <BlurShimmerText phrases={["FULL STACK DEVELOPER", "BACKEND DEVELOPER"]} interval={3000} />
             </span>
           </h1>
 
